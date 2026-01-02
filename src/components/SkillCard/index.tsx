@@ -2,6 +2,17 @@ import React from 'react';
 import styles from './styles.module.css';
 import { getSkill, formatSkillRoll } from '@site/src/data/skills';
 
+// Parse **bold** syntax into React elements
+function parseMarkdown(text: string): React.ReactNode {
+  const parts = text.split(/(\*\*[^*]+\*\*)/g);
+  return parts.map((part, i) => {
+    if (part.startsWith('**') && part.endsWith('**')) {
+      return <strong key={i}>{part.slice(2, -2)}</strong>;
+    }
+    return part;
+  });
+}
+
 interface SkillCardProps {
   id: string;
 }
@@ -24,7 +35,7 @@ export default function SkillCard({ id }: SkillCardProps): React.JSX.Element {
       </div>
 
       <div className={styles.section}>
-        <span className={styles.description}>{skill.description}</span>
+        <span className={styles.description}>{parseMarkdown(skill.description ?? '')}</span>
       </div>
 
       {skill.roll !== undefined && (
@@ -35,14 +46,14 @@ export default function SkillCard({ id }: SkillCardProps): React.JSX.Element {
 
       {skill.roll === undefined && (
         <div className={styles.section}>
-          When {skill.clause}:
+          When {skill.clause},
         </div>
       )}
 
       {skill.subclauses ? (
         <ul className={styles.subclauses}>
           {skill.subclauses.map((subclause, index) => (
-            <li key={index}>{subclause}</li>
+            <li key={index}>{parseMarkdown(subclause)}</li>
           ))}
         </ul>
       ) : (

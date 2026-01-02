@@ -1,11 +1,13 @@
 import type { Skill } from '@site/src/types';
 import { improvise } from './skills/improvise';
 import { slay } from './skills/slay';
+import { travel } from './skills/travel';
 
 // Skills database - maps skill IDs to skill definitions
 export const SKILLS_DB: Record<string, Skill> = {
-  'improvise': improvise,
-  'slay': slay,
+  improvise,
+  slay,
+  travel
 };
 
 // Helper function to get a skill by ID
