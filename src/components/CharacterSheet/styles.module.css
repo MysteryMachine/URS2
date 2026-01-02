@@ -1,0 +1,327 @@
+.characterSheet {
+  padding: 20px;
+  border: 1px solid var(--ifm-color-emphasis-300);
+  border-radius: 8px;
+  margin-top: 20px;
+  max-width: 800px;
+}
+
+/* Name Section */
+.nameSection {
+  margin-bottom: 24px;
+}
+
+.nameInput {
+  margin-left: 10px;
+  padding: 8px 12px;
+  border: 1px solid var(--ifm-color-emphasis-300);
+  border-radius: 4px;
+  font-size: 16px;
+  min-width: 300px;
+}
+
+/* Base Stats Section */
+.statsSection {
+  margin-bottom: 24px;
+  padding: 16px;
+  background-color: var(--ifm-color-emphasis-100);
+  border-radius: 6px;
+}
+
+.freePoints {
+  font-weight: normal;
+  color: var(--ifm-color-emphasis-700);
+  font-size: 0.9em;
+}
+
+.statsList {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  margin-top: 12px;
+}
+
+.statRow {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 12px;
+  background-color: var(--ifm-background-color);
+  border-radius: 4px;
+  border: 1px solid var(--ifm-color-emphasis-200);
+}
+
+.statLabel {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.statDescription {
+  font-size: 0.85em;
+  color: var(--ifm-color-emphasis-600);
+  font-style: italic;
+}
+
+.statControls {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.statButton {
+  width: 32px;
+  height: 32px;
+  padding: 0;
+  font-size: 18px;
+  font-weight: bold;
+  cursor: pointer;
+  background-color: var(--ifm-color-primary);
+  color: white;
+  border: none;
+  border-radius: 4px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.statButton:hover:not(:disabled) {
+  background-color: var(--ifm-color-primary-dark);
+}
+
+.statButton:disabled {
+  background-color: var(--ifm-color-emphasis-300);
+  cursor: not-allowed;
+  opacity: 0.5;
+}
+
+.statValue {
+  min-width: 120px;
+  text-align: center;
+  font-weight: bold;
+  font-size: 16px;
+}
+
+/* Equipment Section */
+.equipmentSection {
+  margin-bottom: 24px;
+  padding: 16px;
+  background-color: var(--ifm-color-emphasis-100);
+  border-radius: 6px;
+}
+
+.equipmentSlots {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  margin-top: 12px;
+}
+
+.equipmentSlot {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 12px;
+  background-color: var(--ifm-background-color);
+  border-radius: 4px;
+  border: 1px solid var(--ifm-color-emphasis-200);
+}
+
+.slotLabel {
+  font-weight: bold;
+  color: var(--ifm-color-emphasis-700);
+}
+
+.slotValue {
+  font-style: italic;
+  color: var(--ifm-color-emphasis-600);
+}
+
+.slotStats {
+  font-size: 0.9em;
+  color: var(--ifm-color-emphasis-700);
+  font-weight: 500;
+}
+
+/* Derived Stats Section */
+.derivedStatsSection {
+  margin-bottom: 24px;
+  padding: 16px;
+  background-color: var(--ifm-color-emphasis-100);
+  border-radius: 6px;
+}
+
+.derivedStatsGrid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+  gap: 16px;
+  margin-top: 12px;
+}
+
+.derivedStat {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  padding: 12px;
+  background-color: var(--ifm-background-color);
+  border-radius: 4px;
+  border: 1px solid var(--ifm-color-emphasis-200);
+}
+
+.derivedStatLabel {
+  font-size: 0.9em;
+  color: var(--ifm-color-emphasis-700);
+}
+
+.derivedStatValue {
+  font-weight: bold;
+  font-size: 1.2em;
+}
+
+/* Dice Roller Section */
+.diceRoller {
+  margin-bottom: 24px;
+  padding: 16px;
+  background-color: var(--ifm-color-emphasis-100);
+  border-radius: 6px;
+}
+
+.rollControls {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  margin-top: 12px;
+}
+
+.rollControls label {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  font-weight: bold;
+}
+
+.statSelect {
+  padding: 8px 12px;
+  border: 1px solid var(--ifm-color-emphasis-300);
+  border-radius: 4px;
+  font-size: 14px;
+  background-color: var(--ifm-background-color);
+  cursor: pointer;
+}
+
+.rollButton {
+  padding: 12px 24px;
+  cursor: pointer;
+  background-color: var(--ifm-color-primary);
+  color: white;
+  border: none;
+  border-radius: 4px;
+  font-size: 16px;
+  font-weight: bold;
+}
+
+.rollButton:hover {
+  background-color: var(--ifm-color-primary-dark);
+}
+
+.rollResult {
+  margin-top: 16px;
+  padding: 16px;
+  background-color: var(--ifm-background-color);
+  border-radius: 4px;
+  border: 2px solid var(--ifm-color-primary);
+}
+
+.rollBreakdown {
+  margin: 0;
+  font-size: 1.2em;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  justify-content: center;
+}
+
+.die {
+  display: inline-block;
+  padding: 4px 8px;
+  background-color: var(--ifm-color-emphasis-200);
+  border-radius: 4px;
+  font-weight: bold;
+  font-family: monospace;
+}
+
+.modifier {
+  font-weight: bold;
+  color: var(--ifm-color-primary);
+}
+
+.total {
+  font-size: 1.3em;
+  color: var(--ifm-color-success);
+}
+
+/* Import/Export Section */
+.importExportSection {
+  margin-top: 24px;
+  padding-top: 24px;
+  border-top: 1px solid var(--ifm-color-emphasis-300);
+}
+
+.buttonGroup {
+  display: flex;
+  gap: 12px;
+  flex-wrap: wrap;
+}
+
+.importButton,
+.exportButton {
+  padding: 10px 20px;
+  cursor: pointer;
+  background-color: var(--ifm-color-primary);
+  color: white;
+  border: none;
+  border-radius: 4px;
+  font-size: 14px;
+  font-weight: 500;
+}
+
+.importButton:hover,
+.exportButton:hover {
+  background-color: var(--ifm-color-primary-dark);
+}
+
+.importButton {
+  display: inline-block;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .characterSheet {
+    padding: 16px;
+  }
+
+  .statRow {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 12px;
+  }
+
+  .statControls {
+    width: 100%;
+    justify-content: space-between;
+  }
+
+  .nameInput {
+    min-width: 100%;
+    margin-left: 0;
+    margin-top: 8px;
+  }
+
+  .rollControls {
+    width: 100%;
+  }
+
+  .rollButton {
+    width: 100%;
+  }
+}
