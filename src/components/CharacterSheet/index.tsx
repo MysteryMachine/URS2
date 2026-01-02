@@ -8,7 +8,7 @@ import type {
   RollResult,
   Item,
   EquipmentSlots,
-} from '@site/src/types/character';
+} from '@site/src/types';
 
 // Helper: Calculate derived stats from base stats and equipment
 const calculateDerivedStats = (stats: CharacterStats, equipment: EquipmentSlots): DerivedStats => {
@@ -68,7 +68,7 @@ const roll2d6 = (statModifier: number, statName: StatName): RollResult => {
   return { die1, die2, modifier: statModifier, total, statName };
 };
 
-export default function CharacterSheet(): JSX.Element {
+export default function CharacterSheet(): React.JSX.Element {
   const [character, setCharacter] = useState<Character>(createInitialCharacter());
   const [rollResult, setRollResult] = useState<RollResult | null>(null);
   const [selectedStat, setSelectedStat] = useState<StatName>('POW');
