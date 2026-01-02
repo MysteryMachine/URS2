@@ -1,4 +1,4 @@
-import type { Skill } from '@site/src/types/character';
+import type { Skill } from '@site/src/types';
 
 export const slay: Skill = {
   id: 'slay',

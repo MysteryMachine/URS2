@@ -1,4 +1,4 @@
-import type { Skill } from '@site/src/types/character';
+import type { Skill } from '@site/src/types';
 import { improvise } from './skills/improvise';
 import { slay } from './skills/slay';
 
