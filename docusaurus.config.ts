@@ -48,7 +48,7 @@ const config: Config = {
           label: 'Guide',
         },
         {
-          to: '/character-tools',
+          to: '/character-sheet',
           label: 'Character Sheet',
           position: 'right',
         },
