@@ -4,7 +4,7 @@ sidebar_position: 2
 
 # Character
 
-Players are mostly responsible for building and developing their character. 
+Players are mostly responsible for building and developing their character. The Character Sheet contains all the Player needs to know about themselves to play the game. Players need to be aware of what their Stats are, what Items and Equipment they have, and what Skills they have. Additionally, the character sheet provides space for the player to write out their character's Biography, a physical Description of themselves, and any Relationships they have with other characters.
 
 ## Stats
 
@@ -54,5 +54,6 @@ An **Experience** can be gained in many ways. Many Experiences have specific con
 3. **Select any starting Experiences.** Your storyteller will you how many, and which types of Experiences you're allowed to select. It is recommended your characters start with 1 to 3 Basic Experiences, with less experiences being appropriate for newer players.
 4. **Distrbute your additional stat points.** You have 8 additonal points to distribute freely, up to a max of +2.
 5. **Calculate your derived stats.** If you're using the online character sheet, it will calculate this for you. Otherwise, follow the instructions in the **Derived Stats** section.
+6. **Fill out your Biography, Physical Description, and Relationships.** These are additional roleplaying bits of flavor meant to bring your character to life. Relationships is a particularly important field to pay attention to. Developing and deepening your bond with other characters is a way to gain additional Experiences.
 
 *Hint: In URS, you will find yourself regularly using all your stats. It is recommended beginners do not overly focus on specializing.*

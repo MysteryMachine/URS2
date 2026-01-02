@@ -4,11 +4,15 @@ export type StatName = 'POW' | 'PRE' | 'CON' | 'WIT' | 'WIL';
 // Skill definition
 export interface Skill {
   id: string;
-  description: string;
-  success: string;
-  failure: string;
-  partialSuccess: string;
-  roll: StatName[]; // Stats to add for this skill roll
+  name: string;
+  clause: string; // e.g., "attacking something violently in melee range"
+  description?: string;
+  success?: string;
+  failure?: string;
+  partialSuccess?: string;
+  subclauses?: string[]; // Alternative to success/partial/failure - list of sub-conditions
+  roll?: StatName[]; // Stats to add for this skill roll (undefined if skill has no roll)
+  storytellerDeterminesBonuses?: boolean; // If true, Storyteller determines which stats to add
 }
 
 // Item definition
@@ -70,11 +74,16 @@ export interface DerivedStats {
   maxWp: number;
   carryCapacity: number;
   defence: number;
+  speed: number;
 }
 
 // Complete character
 export interface Character {
   name: string;
+  description: string; // Character description
+  biography: string; // Character biography/story
+  relations: string; // Relations with other characters
+  notes: string; // Additional notes
   stats: CharacterStats;
   derivedStats: DerivedStats;
   background: Background | null;

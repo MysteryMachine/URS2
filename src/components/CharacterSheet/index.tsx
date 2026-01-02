@@ -21,6 +21,7 @@ const calculateDerivedStats = (stats: CharacterStats, equipment: EquipmentSlots)
     maxWp: 12 + stats.WIL * 3,
     carryCapacity: 12 + stats.POW * 3,
     defence,
+    speed: 8 + stats.POW,
   };
 };
 
@@ -43,6 +44,10 @@ const createInitialCharacter = (): Character => {
 
   return {
     name: '',
+    description: '',
+    biography: '',
+    relations: '',
+    notes: '',
     stats: initialStats,
     derivedStats: calculateDerivedStats(initialStats, initialEquipment),
     background: null,
@@ -68,9 +73,42 @@ export default function CharacterSheet(): JSX.Element {
   const [rollResult, setRollResult] = useState<RollResult | null>(null);
   const [selectedStat, setSelectedStat] = useState<StatName>('POW');
 
-  // Update character name
-  const handleNameChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setCharacter(prev => ({ ...prev, name: e.target.value }));
+  // Edit mode states
+  const [editingName, setEditingName] = useState(false);
+  const [editingDescription, setEditingDescription] = useState(false);
+  const [editingBiography, setEditingBiography] = useState(false);
+  const [editingRelations, setEditingRelations] = useState(false);
+  const [editingNotes, setEditingNotes] = useState(false);
+
+  // Temporary edit values
+  const [tempValue, setTempValue] = useState('');
+
+  // Edit handlers
+  const startEdit = (field: 'name' | 'description' | 'biography' | 'relations' | 'notes') => {
+    setTempValue(character[field]);
+    switch (field) {
+      case 'name': setEditingName(true); break;
+      case 'description': setEditingDescription(true); break;
+      case 'biography': setEditingBiography(true); break;
+      case 'relations': setEditingRelations(true); break;
+      case 'notes': setEditingNotes(true); break;
+    }
+  };
+
+  const saveEdit = (field: 'name' | 'description' | 'biography' | 'relations' | 'notes') => {
+    setCharacter(prev => ({ ...prev, [field]: tempValue }));
+    cancelEdit(field);
+  };
+
+  const cancelEdit = (field: 'name' | 'description' | 'biography' | 'relations' | 'notes') => {
+    setTempValue('');
+    switch (field) {
+      case 'name': setEditingName(false); break;
+      case 'description': setEditingDescription(false); break;
+      case 'biography': setEditingBiography(false); break;
+      case 'relations': setEditingRelations(false); break;
+      case 'notes': setEditingNotes(false); break;
+    }
   };
 
   // Check if stat can be increased
@@ -187,18 +225,182 @@ export default function CharacterSheet(): JSX.Element {
     <div className={styles.characterSheet}>
       <h3>Character Sheet</h3>
 
-      {/* Name Input */}
-      <div className={styles.nameSection}>
-        <label>
-          <strong>Name:</strong>
-          <input
-            type="text"
-            value={character.name}
-            onChange={handleNameChange}
-            placeholder="Enter character name"
-            className={styles.nameInput}
-          />
-        </label>
+      {/* Character Info Section */}
+      <div className={styles.characterInfoSection}>
+        {/* Name */}
+        <div className={styles.infoField}>
+          <div className={styles.infoHeader}>
+            <strong>Name:</strong>
+            {!editingName && (
+              <button
+                className={styles.editButton}
+                onClick={() => startEdit('name')}
+                title="Edit name"
+              >
+                ✏️
+              </button>
+            )}
+          </div>
+          {editingName ? (
+            <div className={styles.editMode}>
+              <input
+                type="text"
+                value={tempValue}
+                onChange={(e) => setTempValue(e.target.value)}
+                className={styles.editInput}
+                autoFocus
+              />
+              <div className={styles.editButtons}>
+                <button onClick={() => saveEdit('name')} className={styles.saveButton}>Save</button>
+                <button onClick={() => cancelEdit('name')} className={styles.cancelButton}>Cancel</button>
+              </div>
+            </div>
+          ) : (
+            <div className={styles.infoContent}>
+              {character.name || <span className={styles.placeholder}>Click edit to add name</span>}
+            </div>
+          )}
+        </div>
+
+        {/* Physical Description */}
+        <div className={styles.infoField}>
+          <div className={styles.infoHeader}>
+            <strong>Physical Description:</strong>
+            {!editingDescription && (
+              <button
+                className={styles.editButton}
+                onClick={() => startEdit('description')}
+                title="Edit physical description"
+              >
+                ✏️
+              </button>
+            )}
+          </div>
+          {editingDescription ? (
+            <div className={styles.editMode}>
+              <textarea
+                value={tempValue}
+                onChange={(e) => setTempValue(e.target.value)}
+                className={styles.editTextarea}
+                rows={3}
+                autoFocus
+              />
+              <div className={styles.editButtons}>
+                <button onClick={() => saveEdit('description')} className={styles.saveButton}>Save</button>
+                <button onClick={() => cancelEdit('description')} className={styles.cancelButton}>Cancel</button>
+              </div>
+            </div>
+          ) : (
+            <div className={styles.infoContent}>
+              {character.description || <span className={styles.placeholder}>Click edit to add physical description</span>}
+            </div>
+          )}
+        </div>
+
+        {/* Biography */}
+        <div className={styles.infoField}>
+          <div className={styles.infoHeader}>
+            <strong>Biography:</strong>
+            {!editingBiography && (
+              <button
+                className={styles.editButton}
+                onClick={() => startEdit('biography')}
+                title="Edit biography"
+              >
+                ✏️
+              </button>
+            )}
+          </div>
+          {editingBiography ? (
+            <div className={styles.editMode}>
+              <textarea
+                value={tempValue}
+                onChange={(e) => setTempValue(e.target.value)}
+                className={styles.editTextarea}
+                rows={4}
+                autoFocus
+              />
+              <div className={styles.editButtons}>
+                <button onClick={() => saveEdit('biography')} className={styles.saveButton}>Save</button>
+                <button onClick={() => cancelEdit('biography')} className={styles.cancelButton}>Cancel</button>
+              </div>
+            </div>
+          ) : (
+            <div className={styles.infoContent}>
+              {character.biography || <span className={styles.placeholder}>Click edit to add biography</span>}
+            </div>
+          )}
+        </div>
+
+        {/* Relations */}
+        <div className={styles.infoField}>
+          <div className={styles.infoHeader}>
+            <strong>Relations with Other Characters:</strong>
+            {!editingRelations && (
+              <button
+                className={styles.editButton}
+                onClick={() => startEdit('relations')}
+                title="Edit relations"
+              >
+                ✏️
+              </button>
+            )}
+          </div>
+          {editingRelations ? (
+            <div className={styles.editMode}>
+              <textarea
+                value={tempValue}
+                onChange={(e) => setTempValue(e.target.value)}
+                className={styles.editTextarea}
+                rows={3}
+                autoFocus
+              />
+              <div className={styles.editButtons}>
+                <button onClick={() => saveEdit('relations')} className={styles.saveButton}>Save</button>
+                <button onClick={() => cancelEdit('relations')} className={styles.cancelButton}>Cancel</button>
+              </div>
+            </div>
+          ) : (
+            <div className={styles.infoContent}>
+              {character.relations || <span className={styles.placeholder}>Click edit to add relations</span>}
+            </div>
+          )}
+        </div>
+
+        {/* Additional Notes */}
+        <div className={styles.infoField}>
+          <div className={styles.infoHeader}>
+            <strong>Additional Notes:</strong>
+            {!editingNotes && (
+              <button
+                className={styles.editButton}
+                onClick={() => startEdit('notes')}
+                title="Edit notes"
+              >
+                ✏️
+              </button>
+            )}
+          </div>
+          {editingNotes ? (
+            <div className={styles.editMode}>
+              <textarea
+                value={tempValue}
+                onChange={(e) => setTempValue(e.target.value)}
+                className={styles.editTextarea}
+                rows={3}
+                autoFocus
+              />
+              <div className={styles.editButtons}>
+                <button onClick={() => saveEdit('notes')} className={styles.saveButton}>Save</button>
+                <button onClick={() => cancelEdit('notes')} className={styles.cancelButton}>Cancel</button>
+              </div>
+            </div>
+          ) : (
+            <div className={styles.infoContent}>
+              {character.notes || <span className={styles.placeholder}>Click edit to add notes</span>}
+            </div>
+          )}
+        </div>
       </div>
 
       {/* Base Stats Editor */}
@@ -265,7 +467,7 @@ export default function CharacterSheet(): JSX.Element {
                 return weapon ? `${weapon.reach}m` : '1m';
               })()} | Damage: {(() => {
                 const weapon = character.equipment.leftHand || character.equipment.rightHand;
-                return weapon ? weapon.dice : '1d2';
+                return weapon ? weapon.dice : '1d3';
               })()}
             </span>
           </div>
@@ -300,6 +502,12 @@ export default function CharacterSheet(): JSX.Element {
             <span className={styles.derivedStatLabel}>Carry Capacity:</span>
             <span className={styles.derivedStatValue}>
               0/{character.derivedStats.carryCapacity}kg
+            </span>
+          </div>
+          <div className={styles.derivedStat}>
+            <span className={styles.derivedStatLabel}>Speed:</span>
+            <span className={styles.derivedStatValue}>
+              {character.derivedStats.speed}m
             </span>
           </div>
         </div>

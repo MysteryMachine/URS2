@@ -4,6 +4,8 @@ const sidebars: SidebarsConfig = {
   tutorialSidebar: [
     'index',
     'character',
+    'core-skills',
+    'backgrounds-experiences',
   ],
 };
 

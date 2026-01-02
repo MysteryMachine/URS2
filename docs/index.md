@@ -10,6 +10,7 @@ URS is a roleplaying system developed by Sal Becker, aiming to provide deep, fre
 
 * A simple 5 stat system where stats directly represent their bonuses. Most rolls are 2d6 plus stat bonuses.
 * A Background and Experience system that allows your characters to develop in a free-form, classless way.
+* URS features a world that, at the surface, seems relatively mundane and low fantasy. As players progress, the world grows increasingly mystical.
 * Magic is rare and mysterious, requiring individuals to make special appeals to the gods, find rare artefacts, or discovery hidden knowledge to be used.
 
 ## The Storyteller and Players
