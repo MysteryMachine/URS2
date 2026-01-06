@@ -1,6 +1,7 @@
 import React from 'react';
 import styles from './styles.module.css';
 import { getSkill, formatSkillRoll } from '@site/src/data/skills';
+import type { StatName } from '@site/src/types';
 
 // Parse markdown syntax into React elements
 // Supports: **bold**, *italic/highlight*, and bullet lists (lines starting with *)
@@ -24,6 +25,7 @@ function parseMarkdown(text: string): React.ReactNode {
     });
   };
 
+  let justFlushedList = false;
   lines.forEach((line, lineIndex) => {
     const trimmed = line.trim();
 
@@ -31,21 +33,24 @@ function parseMarkdown(text: string): React.ReactNode {
     if (trimmed.startsWith('* ') || (trimmed.startsWith('*') && trimmed.length > 1 && trimmed[1] !== '*')) {
       const bulletContent = trimmed.startsWith('* ') ? trimmed.slice(2) : trimmed.slice(1);
       currentList.push(<li key={`li-${lineIndex}`}>{parseInline(bulletContent, `li-${lineIndex}`)}</li>);
+      justFlushedList = false;
     } else {
       // Flush current list if we have one
       if (currentList.length > 0) {
         result.push(<ul key={`ul-${lineIndex}`} className={styles.inlineList}>{currentList}</ul>);
         currentList = [];
+        justFlushedList = true;
       }
 
       // Add non-bullet content
       if (trimmed) {
-        if (result.length > 0) {
-          result.push(<br key={`br-${lineIndex}`} />);
+        if (result.length > 0 && !justFlushedList) {
+          result.push(' ');
         }
         result.push(<span key={`span-${lineIndex}`}>{parseInline(trimmed, `span-${lineIndex}`)}</span>);
-      } else if (result.length > 0 && lines[lineIndex - 1]?.trim()) {
-        // Empty line after content = paragraph break
+        justFlushedList = false;
+      } else if (result.length > 0 && lines[lineIndex - 1]?.trim() && !justFlushedList) {
+        // Empty line after content = paragraph break (but not after a list)
         result.push(<br key={`br-${lineIndex}`} />);
       }
     }
@@ -61,10 +66,13 @@ function parseMarkdown(text: string): React.ReactNode {
 
 interface SkillCardProps {
   id: string;
+  chosenStat?: StatName;
+  chosenStats?: StatName[];
 }
 
-export default function SkillCard({ id }: SkillCardProps): React.JSX.Element {
+export default function SkillCard({ id, chosenStat, chosenStats }: SkillCardProps): React.JSX.Element {
   const skill = getSkill(id);
+  const statForRoll = chosenStats ?? chosenStat;
 
   if (!skill) {
     return (
@@ -86,7 +94,7 @@ export default function SkillCard({ id }: SkillCardProps): React.JSX.Element {
 
       {skill.roll !== undefined && (
         <div className={styles.section}>
-          When {skill.clause}, roll <strong>{formatSkillRoll(skill)}</strong>.
+          When {skill.clause}, roll <strong>{formatSkillRoll(skill, statForRoll)}</strong>.
         </div>
       )}
 
