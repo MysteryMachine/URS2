@@ -50,10 +50,11 @@ An **Experience** can be gained in many ways. Many Experiences have specific con
 ## Character Creation
 
 1. **Prepare your character sheet.** Go to the Character Sheet and create a new character. All stats start at a score of -2.
-2. **Select your Background.** Apply any stat points to your sheet as indicated by your Background. Add any items indicated by your background to your character sheet.
-3. **Select any starting Experiences.** Your storyteller will you how many, and which types of Experiences you're allowed to select. It is recommended your characters start with 1 to 3 Basic Experiences, with less experiences being appropriate for newer players.
+2. **Select your Background.** Apply any stat points to your sheet as indicated by your Background. Add any items indicated by your background to your character sheet. See the next page to learn about Backgrounds, Experiences and Bonds.
+3. **Select any starting Experiences.** Your storyteller will you how many, and which types of Experiences you're allowed to select. It is recommended your characters start with 1 Supernatural Experience or 3 Basic Experiences. 
 4. **Distrbute your additional stat points.** You have 8 additonal points to distribute freely, up to a max of +2.
 5. **Calculate your derived stats.** If you're using the online character sheet, it will calculate this for you. Otherwise, follow the instructions in the **Derived Stats** section.
-6. **Fill out your Biography, Physical Description, and Relationships.** These are additional roleplaying bits of flavor meant to bring your character to life. Relationships is a particularly important field to pay attention to. Developing and deepening your bond with other characters is a way to gain additional Experiences.
+6. **Create a bond with every party member.** These will be used later to help develop your characters.
+7. **Fill out your Biography and Physical Description.** These are additional roleplaying bits of flavor meant to bring your character to life. Your Bonds, Experiences, and Background will provide you with prompts to fill out.
 
 *Hint: In URS, you will find yourself regularly using all your stats. It is recommended beginners do not overly focus on specializing.*

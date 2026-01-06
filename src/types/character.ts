@@ -1,5 +1,5 @@
 import type { CharacterStats, DerivedStats } from './stats';
-import type { Skill } from './skill';
+import type { CharacterSkill } from './skill';
 import type { Item, EquipmentSlots } from './item';
 import type { Background, Experience } from './bonus';
 
@@ -14,7 +14,7 @@ export interface Character {
   derivedStats: DerivedStats;
   background: Background | null;
   experiences: Experience[];
-  skills: Skill[];
+  skills: CharacterSkill[];  // Skills the character has learned (with their choices)
   items: Item[]; // Inventory
   equipment: EquipmentSlots; // Equipped items
   freeStatPoints: number; // Remaining points from initial 8

@@ -2,15 +2,61 @@ import React from 'react';
 import styles from './styles.module.css';
 import { getSkill, formatSkillRoll } from '@site/src/data/skills';
 
-// Parse **bold** syntax into React elements
+// Parse markdown syntax into React elements
+// Supports: **bold**, *italic/highlight*, and bullet lists (lines starting with *)
 function parseMarkdown(text: string): React.ReactNode {
-  const parts = text.split(/(\*\*[^*]+\*\*)/g);
-  return parts.map((part, i) => {
-    if (part.startsWith('**') && part.endsWith('**')) {
-      return <strong key={i}>{part.slice(2, -2)}</strong>;
+  // Split by newlines to handle bullet points
+  const lines = text.split('\n');
+  const result: React.ReactNode[] = [];
+  let currentList: React.ReactNode[] = [];
+
+  const parseInline = (line: string, keyPrefix: string): React.ReactNode => {
+    // Match **bold** and *highlight* patterns
+    const parts = line.split(/(\*\*[^*]+\*\*|\*[^*]+\*)/g);
+    return parts.map((part, i) => {
+      if (part.startsWith('**') && part.endsWith('**')) {
+        return <strong key={`${keyPrefix}-${i}`}>{part.slice(2, -2)}</strong>;
+      }
+      if (part.startsWith('*') && part.endsWith('*') && part.length > 2) {
+        return <em key={`${keyPrefix}-${i}`} className={styles.highlight}>{part.slice(1, -1)}</em>;
+      }
+      return part;
+    });
+  };
+
+  lines.forEach((line, lineIndex) => {
+    const trimmed = line.trim();
+
+    // Check if line is a bullet point (starts with * followed by space or text)
+    if (trimmed.startsWith('* ') || (trimmed.startsWith('*') && trimmed.length > 1 && trimmed[1] !== '*')) {
+      const bulletContent = trimmed.startsWith('* ') ? trimmed.slice(2) : trimmed.slice(1);
+      currentList.push(<li key={`li-${lineIndex}`}>{parseInline(bulletContent, `li-${lineIndex}`)}</li>);
+    } else {
+      // Flush current list if we have one
+      if (currentList.length > 0) {
+        result.push(<ul key={`ul-${lineIndex}`} className={styles.inlineList}>{currentList}</ul>);
+        currentList = [];
+      }
+
+      // Add non-bullet content
+      if (trimmed) {
+        if (result.length > 0) {
+          result.push(<br key={`br-${lineIndex}`} />);
+        }
+        result.push(<span key={`span-${lineIndex}`}>{parseInline(trimmed, `span-${lineIndex}`)}</span>);
+      } else if (result.length > 0 && lines[lineIndex - 1]?.trim()) {
+        // Empty line after content = paragraph break
+        result.push(<br key={`br-${lineIndex}`} />);
+      }
     }
-    return part;
   });
+
+  // Flush any remaining list
+  if (currentList.length > 0) {
+    result.push(<ul key="ul-final" className={styles.inlineList}>{currentList}</ul>);
+  }
+
+  return result;
 }
 
 interface SkillCardProps {
@@ -59,15 +105,15 @@ export default function SkillCard({ id }: SkillCardProps): React.JSX.Element {
       ) : (
         <div className={styles.outcomes}>
           <div className={styles.outcome}>
-            <strong className={styles.outcomeLabel}>On a 10+:</strong> {skill.success}
+            <strong className={styles.outcomeLabel}>On a 10+:</strong> {parseMarkdown(skill.success ?? '')}
           </div>
 
           <div className={styles.outcome}>
-            <strong className={styles.outcomeLabel}>On a 6-9:</strong> {skill.partialSuccess}
+            <strong className={styles.outcomeLabel}>On a 6-9:</strong> {parseMarkdown(skill.partialSuccess ?? '')}
           </div>
 
           <div className={styles.outcome}>
-            <strong className={styles.outcomeLabel}>Otherwise:</strong> {skill.failure}
+            <strong className={styles.outcomeLabel}>Otherwise:</strong> {parseMarkdown(skill.failure ?? '')}
           </div>
         </div>
       )}

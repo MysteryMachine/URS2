@@ -8,7 +8,10 @@ import type {
   RollResult,
   Item,
   EquipmentSlots,
+  CharacterSkill,
 } from '@site/src/types';
+import BackgroundPicker, { type AppliedBackground } from '@site/src/components/BackgroundPicker';
+import { getSkill } from '@site/src/data/skills';
 
 // Helper: Calculate derived stats from base stats and equipment
 const calculateDerivedStats = (stats: CharacterStats, equipment: EquipmentSlots): DerivedStats => {
@@ -72,6 +75,7 @@ export default function CharacterSheet(): React.JSX.Element {
   const [character, setCharacter] = useState<Character>(createInitialCharacter());
   const [rollResult, setRollResult] = useState<RollResult | null>(null);
   const [selectedStat, setSelectedStat] = useState<StatName>('POW');
+  const [showBackgroundPicker, setShowBackgroundPicker] = useState(false);
 
   // Edit mode states
   const [editingName, setEditingName] = useState(false);
@@ -210,6 +214,47 @@ export default function CharacterSheet(): React.JSX.Element {
   const getStatLabel = (stat: StatName, value: number): string => {
     const isSupernatural = value > 2 || value < -2;
     return isSupernatural ? `${value} (Supernatural)` : `${value}`;
+  };
+
+  // Handle applying a background
+  const handleApplyBackground = (result: AppliedBackground) => {
+    setCharacter(prev => {
+      // Apply stat bonuses
+      const newStats = { ...prev.stats };
+      for (const stat of ['POW', 'PRE', 'CON', 'WIT', 'WIL'] as StatName[]) {
+        newStats[stat] += result.statBonuses[stat];
+      }
+
+      // Add skills
+      const newSkills: CharacterSkill[] = [...prev.skills, ...result.skills];
+
+      // Add items to inventory
+      const newItems: Item[] = [...prev.items];
+      for (const { item, amount } of result.items) {
+        // For stackable items, add with quantity
+        const newItem = { ...item, quantity: amount };
+        newItems.push(newItem);
+      }
+
+      // Check if any items are armor and auto-equip if no armor equipped
+      let newEquipment = { ...prev.equipment };
+      for (const { item } of result.items) {
+        if (item.isArmor && !newEquipment.armor) {
+          newEquipment.armor = item;
+        }
+      }
+
+      return {
+        ...prev,
+        stats: newStats,
+        skills: newSkills,
+        items: newItems,
+        equipment: newEquipment,
+        background: result.background,
+        derivedStats: calculateDerivedStats(newStats, newEquipment),
+      };
+    });
+    setShowBackgroundPicker(false);
   };
 
   // Stat descriptions
@@ -403,6 +448,67 @@ export default function CharacterSheet(): React.JSX.Element {
         </div>
       </div>
 
+      {/* Background Section */}
+      <div className={styles.backgroundSection}>
+        <h4>Background</h4>
+        {showBackgroundPicker ? (
+          <BackgroundPicker
+            onApply={handleApplyBackground}
+            onCancel={() => setShowBackgroundPicker(false)}
+          />
+        ) : character.background ? (
+          <div className={styles.currentBackground}>
+            <div className={styles.backgroundInfo}>
+              <strong>{character.background.name}</strong>
+              <p>{character.background.description}</p>
+            </div>
+            <button
+              className={styles.changeBackgroundButton}
+              onClick={() => setShowBackgroundPicker(true)}
+            >
+              Change Background
+            </button>
+          </div>
+        ) : (
+          <div className={styles.noBackground}>
+            <p className={styles.placeholder}>No background selected</p>
+            <button
+              className={styles.selectBackgroundButton}
+              onClick={() => setShowBackgroundPicker(true)}
+            >
+              Select Background
+            </button>
+          </div>
+        )}
+      </div>
+
+      {/* Skills Section */}
+      {character.skills.length > 0 && (
+        <div className={styles.skillsSection}>
+          <h4>Skills</h4>
+          <div className={styles.skillsList}>
+            {character.skills.map((charSkill, index) => {
+              const skill = getSkill(charSkill.skillId);
+              if (!skill) return null;
+              return (
+                <div key={index} className={styles.skillItem}>
+                  <strong>{skill.name}</strong>
+                  {charSkill.chosenStat && (
+                    <span className={styles.skillStat}>({charSkill.chosenStat})</span>
+                  )}
+                  {charSkill.chosenStats && charSkill.chosenStats.length > 0 && (
+                    <span className={styles.skillStat}>({charSkill.chosenStats.join('/')})</span>
+                  )}
+                  {charSkill.promptAnswers && Object.entries(charSkill.promptAnswers).map(([prompt, answer]) => (
+                    answer && <div key={prompt} className={styles.skillAnswer}>{answer}</div>
+                  ))}
+                </div>
+              );
+            })}
+          </div>
+        </div>
+      )}
+
       {/* Base Stats Editor */}
       <div className={styles.statsSection}>
         <h4>Base Stats <span className={styles.freePoints}>(Free Points: {character.freeStatPoints}/8)</span></h4>
@@ -464,10 +570,10 @@ export default function CharacterSheet(): React.JSX.Element {
             <span className={styles.slotStats}>
               Reach: {(() => {
                 const weapon = character.equipment.leftHand || character.equipment.rightHand;
-                return weapon ? `${weapon.reach}m` : '1m';
+                return weapon?.reach ? `${weapon.reach}m` : '1m';
               })()} | Damage: {(() => {
                 const weapon = character.equipment.leftHand || character.equipment.rightHand;
-                return weapon ? weapon.dice : '1d3';
+                return weapon?.damage ?? '1d3';
               })()}
             </span>
           </div>

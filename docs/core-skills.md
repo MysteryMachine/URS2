@@ -59,3 +59,9 @@ One does not need to directly invoke the name Slay to trigger Slay. If the Story
 Travel outlines the rules for the logistics of travel. The skill outlines how fast the party can travel and how many resources they will need in order to arrive safely. Preparing for safe travel is an important part of planning expeditions in URS. Players that are wealthy enough might wind up using horses to cover distance faster. Those players might even wind up hiring coaches or horse caretakers.
 
 <SkillCard id="travel" />
+
+## Other Skills
+
+As you play the game, you'll pick up new Skills. These skills will allow you to do certain actions with more confidence, with better rewards, or they might even remove a dice roll requirement entirely from an action.
+
+You CAN do anything you like with Improvise, but a practiced Skill will always yield better results.

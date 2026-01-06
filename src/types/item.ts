@@ -3,11 +3,14 @@ export interface Item {
   id: string;
   name: string;
   description: string;
-  defence: number;
-  reach: number;
-  dice: string; // e.g., "1d8", "2d6"
-  hands: 1 | 2; // 1-handed or 2-handed
-  isArmor: boolean;
+  damage?: string;      // e.g., "1d4", "1d6"
+  range?: number;       // in meters (for ranged weapons)
+  defence?: number;     // armor defence value
+  reach?: number;       // melee reach in meters
+  hands?: 1 | 2;        // 1-handed or 2-handed
+  isArmor?: boolean;
+  isConsumable?: boolean;  // for rations, water, etc.
+  quantity?: number;    // for stackable items like arrows
 }
 
 // Equipment slots

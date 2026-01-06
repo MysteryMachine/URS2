@@ -221,6 +221,105 @@
   opacity: 0.8;
 }
 
+/* Background Section */
+.backgroundSection {
+  margin-bottom: 24px;
+  padding: 16px;
+  background-color: var(--ifm-color-emphasis-100);
+  border-radius: 6px;
+}
+
+.currentBackground {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.backgroundInfo {
+  padding: 12px;
+  background-color: var(--ifm-background-color);
+  border-radius: 4px;
+  border: 1px solid var(--ifm-color-emphasis-200);
+}
+
+.backgroundInfo strong {
+  color: var(--ifm-color-primary);
+  font-size: 1.1em;
+}
+
+.backgroundInfo p {
+  margin: 8px 0 0 0;
+  color: var(--ifm-color-emphasis-700);
+}
+
+.noBackground {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 12px;
+  padding: 24px;
+}
+
+.selectBackgroundButton,
+.changeBackgroundButton {
+  padding: 10px 20px;
+  background-color: var(--ifm-color-primary);
+  color: white;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 14px;
+  font-weight: 500;
+}
+
+.selectBackgroundButton:hover,
+.changeBackgroundButton:hover {
+  background-color: var(--ifm-color-primary-dark);
+}
+
+.changeBackgroundButton {
+  align-self: flex-start;
+}
+
+/* Skills Section */
+.skillsSection {
+  margin-bottom: 24px;
+  padding: 16px;
+  background-color: var(--ifm-color-emphasis-100);
+  border-radius: 6px;
+}
+
+.skillsList {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  margin-top: 12px;
+}
+
+.skillItem {
+  padding: 12px;
+  background-color: var(--ifm-background-color);
+  border-radius: 4px;
+  border: 1px solid var(--ifm-color-emphasis-200);
+}
+
+.skillItem strong {
+  color: var(--ifm-color-primary);
+}
+
+.skillStat {
+  margin-left: 8px;
+  color: var(--ifm-color-emphasis-600);
+  font-weight: 500;
+}
+
+.skillAnswer {
+  margin-top: 4px;
+  font-size: 0.9em;
+  color: var(--ifm-color-emphasis-600);
+  font-style: italic;
+}
+
 /* Equipment Section */
 .equipmentSection {
   margin-bottom: 24px;
